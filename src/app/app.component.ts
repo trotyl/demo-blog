@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+
+interface Article {
+  id: string;
+  title: string;
+  createdAt: Date;
+}
 
 @Component({
   selector: 'app-root',
@@ -6,11 +13,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  articles = [{
-    title: 'This is title 1',
-    createdAt: new Date(),
-  }, {
-    title: 'This is title 2',
-    createdAt: new Date(),
-  }];
+  articles: FirebaseListObservable<Article[]>;
+
+  constructor(private fire: AngularFire) {
+    this.articles = fire.database.list('/articles');
+  }
 }
