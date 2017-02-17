@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  articles = [{
+    title: 'This is title 1',
+    createdAt: new Date(),
+  }, {
+    title: 'This is title 2',
+    createdAt: new Date(),
+  }];
 }
