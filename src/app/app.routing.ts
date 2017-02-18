@@ -1,12 +1,18 @@
 import { Route } from '@angular/router';
-import { ArticleListComponent } from './article-list/article-list.component'
-import { ArticleDetailComponent } from './article-detail/article-detail.component';
+import { ArticleListComponent } from './article-list';
+import { ArticleDetailComponent } from './article-detail';
+import { ArticleEditorComponent } from './article-editor';
 
 export const routes: Route[] = [{
   path: '',
   component: ArticleListComponent,
-  pathMatch: 'full'
+  pathMatch: 'full',
+}, {
+  path: 'articles/create',
+  component: ArticleEditorComponent,
+  pathMatch: 'full',
 }, {
   path: 'articles/:id',
   component: ArticleDetailComponent,
+  pathMatch: 'full',
 }];

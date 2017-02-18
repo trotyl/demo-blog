@@ -11,6 +11,7 @@ import { routes } from './app.routing';
 
 import { ArticleListComponent } from './article-list';
 import { ArticleDetailComponent } from './article-detail';
+import { ArticleEditorComponent } from './article-editor';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDc2PkvcTA4WL4kGyRVT96OooxFpCcnuDo',
@@ -24,7 +25,8 @@ const firebaseConfig = {
   declarations: [
     AppComponent,
     ArticleListComponent,
-    ArticleDetailComponent
+    ArticleDetailComponent,
+    ArticleEditorComponent
   ],
   imports: [
     BrowserModule,
