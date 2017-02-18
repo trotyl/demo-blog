@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
@@ -11,19 +11,27 @@ import { Article } from '../article';
   templateUrl: './article-editor.component.html',
   styleUrls: ['./article-editor.component.css']
 })
-export class ArticleEditorComponent {
-  form: FormGroup = new FormGroup({
-    title: new FormControl(),
-    content: new FormControl(),
-  });
+export class ArticleEditorComponent implements OnInit {
+  form: FormGroup;
   isNew: boolean;
   id: string;
   createdAt: string;
   article$: Observable<Article>;
 
-  constructor(private route: ActivatedRoute, private router: Router, private fire: AngularFire) {
-    const snapshot = route.snapshot;
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private fire: AngularFire,
+  ) { }
+
+  ngOnInit(): void {
+    const snapshot = this.route.snapshot;
     this.isNew = snapshot.data['isNew'];
+
+    this.form = new FormGroup({
+      title: new FormControl(),
+      content: new FormControl(),
+    });
 
     if (this.isNew) {
       this.id = Date.now().toString();
@@ -36,12 +44,12 @@ export class ArticleEditorComponent {
       });
     } else {
       this.id = snapshot.params['id'];
-      this.article$ = fire.database.object(`/articles/${this.id}`)
+      this.article$ = this.fire.database.object(`/articles/${this.id}`)
         .do((article: Article) => this.createdAt = article.createdAt);
     }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.fire.database.object(`/articles/${this.id}`).set({
       id: this.id,
       createdAt: this.createdAt,

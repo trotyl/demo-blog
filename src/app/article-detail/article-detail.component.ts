@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
@@ -8,11 +8,17 @@ import { Article } from '../article';
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
 })
-export class ArticleDetailComponent {
+export class ArticleDetailComponent implements OnInit {
   article: FirebaseObjectObservable<Article>;
 
-  constructor(private route: ActivatedRoute, private fire: AngularFire) {
-    const snapshot = route.snapshot;
-    this.article = fire.database.object(`/articles/${snapshot.params['id']}`);
+  constructor(
+    private route: ActivatedRoute,
+    private fire: AngularFire,
+  ) { }
+
+  ngOnInit(): void {
+    const snapshot = this.route.snapshot;
+    const id = snapshot.params['id'];
+    this.article = this.fire.database.object(`/articles/${id}`);
   }
 }

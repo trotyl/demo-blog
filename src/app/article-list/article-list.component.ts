@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 import { Article } from '../article';
@@ -7,10 +7,14 @@ import { Article } from '../article';
   selector: 'app-article-list',
   templateUrl: './article-list.component.html',
 })
-export class ArticleListComponent {
+export class ArticleListComponent implements OnInit {
   articles: FirebaseListObservable<Article[]>;
 
-  constructor(private fire: AngularFire) {
-    this.articles = fire.database.list('/articles');
+  constructor(
+    private fire: AngularFire
+  ) { }
+
+  ngOnInit(): void {
+    this.articles = this.fire.database.list('/articles');
   }
 }
