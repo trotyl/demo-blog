@@ -10,6 +10,7 @@ export const routes: Route[] = [{
 }, {
   path: 'articles/create',
   component: ArticleEditorComponent,
+  data: { isNew: true },
   pathMatch: 'full',
 }, {
   path: 'articles/:id',
