@@ -38,6 +38,16 @@ export class ArticleEditorComponent implements OnInit {
     this.form.get('content').setValue(value);
   }
 
+  get tags(): { [key: number]: string } {
+    const values = this.form.get('tags').value.split(/\s/).filter(x => x.length > 0);
+    return Object.assign({}, values);
+  }
+
+  set tags(value: { [key: number]: string }) {
+    const values = Object.values(value);
+    this.form.get('tags').setValue(values.join(' '));
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -52,6 +62,7 @@ export class ArticleEditorComponent implements OnInit {
     this.form = new FormGroup({
       title: new FormControl(),
       content: new FormControl(),
+      tags: new FormControl(),
     });
 
     if (this.isNew) {
@@ -70,6 +81,7 @@ export class ArticleEditorComponent implements OnInit {
         this.createdAt = article.createdAt;
         this.title = article.title;
         this.content = article.content;
+        this.tags = article.tags;
       });
     }
   }
@@ -89,11 +101,13 @@ export class ArticleEditorComponent implements OnInit {
         createdAt: this.createdAt,
         title: this.title,
         content: this.content,
+        tags: this.tags,
       });
     } else {
       promise = article$.update({
         title: this.title,
         content: this.content,
+        tags: this.tags,
       });
     }
 
