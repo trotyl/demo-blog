@@ -1,5 +1,6 @@
 export interface Article {
   id: string;
   title: string;
-  createdAt: Date;
+  createdAt: Date | string;
+  content: string;
 }
