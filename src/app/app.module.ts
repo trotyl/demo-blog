@@ -9,6 +9,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AppComponent } from './app.component';
 import { routes } from './app.routing';
 
+import { KeysPipe } from './keys.pipe';
 import { ArticleListComponent } from './article-list';
 import { ArticleDetailComponent } from './article-detail';
 import { ArticleEditorComponent } from './article-editor';
@@ -26,7 +27,8 @@ const firebaseConfig = {
     AppComponent,
     ArticleListComponent,
     ArticleDetailComponent,
-    ArticleEditorComponent
+    ArticleEditorComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,

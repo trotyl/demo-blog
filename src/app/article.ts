@@ -3,4 +3,5 @@ export interface Article {
   title: string;
   createdAt: string;
   content: string;
+  tags: { [key: number]: string };
 }
