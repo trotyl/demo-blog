@@ -1,11 +1,13 @@
-<form class="example-form" #articleForm="ngForm">
+<form class="example-form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <md-input-container>
-    <input mdInput placeholder="Title">
+    <input mdInput formControlName="title" placeholder="Title">
   </md-input-container>
 
   <p>
     <md-input-container class="example-full-width">
-      <textarea mdInput placeholder="Content"></textarea>
+      <textarea mdInput formControlName="content" placeholder="Content"></textarea>
     </md-input-container>
   </p>
+
+  <button md-button>Submit</button>
 </form>
