@@ -5,9 +5,17 @@
 
   <p>
     <md-input-container class="example-full-width">
-      <textarea mdInput formControlName="content" placeholder="Content"></textarea>
+      <textarea
+        mdInput
+        formControlName="content"
+        placeholder="Content"
+      >
+      </textarea>
     </md-input-container>
   </p>
 
+  <button md-button (click)="preview()">Preview</button>
   <button md-button>Submit</button>
 </form>
+
+<div [innerHTML]="htmlPreview"></div>

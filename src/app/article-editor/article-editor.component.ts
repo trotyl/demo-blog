@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
+import * as MarkdownIt from 'markdown-it';
 
 import { Article } from '../article';
 
@@ -17,7 +18,25 @@ export class ArticleEditorComponent implements OnInit {
   isNew: boolean;
   id: string;
   createdAt: string;
+  md: any;
+  htmlPreview: string;
   article$: Observable<Article>;
+
+  get title(): string {
+    return this.form.get('title').value;
+  }
+
+  set title(value: string) {
+    this.form.get('title').setValue(value);
+  }
+
+  get content(): string {
+    return this.form.get('content').value;
+  }
+
+  set content(value: string) {
+    this.form.get('content').setValue(value);
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +47,7 @@ export class ArticleEditorComponent implements OnInit {
   ngOnInit(): void {
     const snapshot = this.route.snapshot;
     this.isNew = snapshot.data['isNew'];
+    this.md = new MarkdownIt();
 
     this.form = new FormGroup({
       title: new FormControl(),
@@ -48,10 +68,15 @@ export class ArticleEditorComponent implements OnInit {
       this.article$ = this.fire.database.object(`/articles/${this.id}`);
       this.article$.subscribe((article: Article) => {
         this.createdAt = article.createdAt;
-        this.form.get('title').setValue(article.title);
-        this.form.get('content').setValue(article.content);
+        this.title = article.title;
+        this.content = article.content;
       });
     }
+  }
+
+  preview(): boolean {
+    this.htmlPreview = this.md.render(this.content);
+    return false;
   }
 
   onSubmit(): void {
@@ -62,13 +87,13 @@ export class ArticleEditorComponent implements OnInit {
       promise = article$.set({
         id: this.id,
         createdAt: this.createdAt,
-        title: this.form.get('title').value,
-        content: this.form.get('content').value,
+        title: this.title,
+        content: this.content,
       });
     } else {
       promise = article$.update({
-        title: this.form.get('title').value,
-        content: this.form.get('content').value,
+        title: this.title,
+        content: this.content,
       });
     }
 
