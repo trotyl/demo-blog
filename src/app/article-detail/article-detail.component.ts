@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import * as MarkdownIt from 'markdown-it';
 
@@ -16,6 +16,7 @@ export class ArticleDetailComponent implements OnInit {
   htmlPreview: string;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private fire: AngularFire,
   ) { }
@@ -29,5 +30,12 @@ export class ArticleDetailComponent implements OnInit {
     this.article.subscribe((article: Article) => {
       this.htmlPreview = this.md.render(article.content);
     });
+  }
+
+  delete(): void {
+    this.article.remove()
+      .then(() => {
+        this.router.navigate(['/']);
+      });
   }
 }
