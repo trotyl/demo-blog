@@ -1,21 +1,26 @@
-<form class="example-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <md-input-container>
-    <input mdInput formControlName="title" placeholder="Title">
-  </md-input-container>
+<md-grid-list cols="2">
+  <md-grid-tile>
+    <form class="example-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <md-input-container>
+        <input mdInput formControlName="title" placeholder="Title">
+      </md-input-container>
 
-  <p>
-    <md-input-container class="example-full-width">
-      <textarea
-        mdInput
-        formControlName="content"
-        placeholder="Content"
-      >
-      </textarea>
-    </md-input-container>
-  </p>
+      <p>
+        <md-input-container class="example-full-width">
+          <textarea
+            mdInput
+            formControlName="content"
+            placeholder="Content"
+          >
+          </textarea>
+        </md-input-container>
+      </p>
 
-  <button md-button (click)="preview()">Preview</button>
-  <button md-button>Submit</button>
-</form>
-
-<div [innerHTML]="htmlPreview"></div>
+      <button md-button (click)="preview()">Preview</button>
+      <button md-button>Submit</button>
+    </form>
+  </md-grid-tile>
+  <md-grid-tile>
+    <div [innerHTML]="htmlPreview"></div>
+  </md-grid-tile>
+</md-grid-list>
