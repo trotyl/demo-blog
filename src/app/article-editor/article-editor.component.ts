@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
 
 import { Article } from '../article';
 
@@ -44,8 +45,12 @@ export class ArticleEditorComponent implements OnInit {
       });
     } else {
       this.id = snapshot.params['id'];
-      this.article$ = this.fire.database.object(`/articles/${this.id}`)
-        .do((article: Article) => this.createdAt = article.createdAt);
+      this.article$ = this.fire.database.object(`/articles/${this.id}`);
+      this.article$.subscribe((article: Article) => {
+        this.createdAt = article.createdAt;
+        this.form.get('title').setValue(article.title);
+        this.form.get('content').setValue(article.content);
+      });
     }
   }
 

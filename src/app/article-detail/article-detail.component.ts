@@ -9,6 +9,7 @@ import { Article } from '../article';
   templateUrl: './article-detail.component.html',
 })
 export class ArticleDetailComponent implements OnInit {
+  id: string;
   article: FirebaseObjectObservable<Article>;
 
   constructor(
@@ -18,7 +19,7 @@ export class ArticleDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const snapshot = this.route.snapshot;
-    const id = snapshot.params['id'];
-    this.article = this.fire.database.object(`/articles/${id}`);
+    this.id = snapshot.params['id'];
+    this.article = this.fire.database.object(`/articles/${this.id}`);
   }
 }

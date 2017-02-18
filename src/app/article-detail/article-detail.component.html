@@ -1,3 +1,5 @@
 <h2>{{ (article | async)?.title }}</h2>
 
 <div [innerHTML]="(article | async)?.content"></div>
+
+<a md-button [routerLink]="['/articles', id, 'edit']">Edit Me</a>

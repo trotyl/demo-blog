@@ -16,4 +16,9 @@ export const routes: Route[] = [{
   path: 'articles/:id',
   component: ArticleDetailComponent,
   pathMatch: 'full',
+}, {
+  path: 'articles/:id/edit',
+  component: ArticleEditorComponent,
+  data: { isNew: false },
+  pathMatch: 'full',
 }];
