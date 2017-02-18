@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'keys'
+  name: 'values'
 })
-export class KeysPipe implements PipeTransform {
+export class ValuesPipe implements PipeTransform {
   transform(obj: { [key: string]: string }): any[] {
-    return obj == null ? [] : Object.keys(obj);
+    return obj == null ? [] : Object.values(obj);
   }
 }

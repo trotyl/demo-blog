@@ -1,4 +1,7 @@
 <h2>{{ (article | async)?.title }}</h2>
+<md-chip-list>
+  <md-chip *ngFor="let tag of ((article | async)?.tags | values)">{{ tag }}</md-chip>
+</md-chip-list>
 <a md-button [routerLink]="['/articles', id, 'edit']">Edit Me</a>
 <a md-button (click)="delete()">Delete Me</a>
 

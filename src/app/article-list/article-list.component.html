@@ -4,7 +4,7 @@
     <h3 md-line>{{ article.title }}</h3>
     <p md-line>{{ article.createdAt | date:'medium' }}</p>
     <md-chip-list md-line>
-      <md-chip *ngFor="let key of (article.tags | keys)">{{ article.tags[key] }}</md-chip>
+      <md-chip *ngFor="let tag of (article.tags | values)">{{ tag }}</md-chip>
     </md-chip-list>
   </a>
 </md-nav-list>
