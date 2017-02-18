@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
 
@@ -21,7 +21,7 @@ export class ArticleEditorComponent {
   createdAt: string;
   article$: Observable<Article>;
 
-  constructor(private route: ActivatedRoute, private fire: AngularFire) {
+  constructor(private route: ActivatedRoute, private router: Router, private fire: AngularFire) {
     const snapshot = route.snapshot;
     this.isNew = snapshot.data['isNew'];
 
@@ -47,6 +47,8 @@ export class ArticleEditorComponent {
       createdAt: this.createdAt,
       title: this.form.get('title').value,
       content: this.form.get('content').value,
+    }).then(() => {
+      this.router.navigate(['/']);
     });
   }
 }
