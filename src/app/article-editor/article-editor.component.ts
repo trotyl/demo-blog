@@ -55,12 +55,24 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.fire.database.object(`/articles/${this.id}`).set({
-      id: this.id,
-      createdAt: this.createdAt,
-      title: this.form.get('title').value,
-      content: this.form.get('content').value,
-    }).then(() => {
+    const article$ = this.fire.database.object(`/articles/${this.id}`);
+    let promise: any;
+
+    if (this.isNew) {
+      promise = article$.set({
+        id: this.id,
+        createdAt: this.createdAt,
+        title: this.form.get('title').value,
+        content: this.form.get('content').value,
+      });
+    } else {
+      promise = article$.update({
+        title: this.form.get('title').value,
+        content: this.form.get('content').value,
+      });
+    }
+
+    promise.then(() => {
       this.router.navigate(['/']);
     });
   }
