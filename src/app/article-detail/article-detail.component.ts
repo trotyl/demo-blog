@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import * as MarkdownIt from 'markdown-it';
 
 import { Article } from '../article';
 
@@ -9,8 +10,10 @@ import { Article } from '../article';
   templateUrl: './article-detail.component.html',
 })
 export class ArticleDetailComponent implements OnInit {
+  md: any;
   id: string;
   article: FirebaseObjectObservable<Article>;
+  htmlPreview: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,8 +21,13 @@ export class ArticleDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.md = new MarkdownIt();
+
     const snapshot = this.route.snapshot;
     this.id = snapshot.params['id'];
     this.article = this.fire.database.object(`/articles/${this.id}`);
+    this.article.subscribe((article: Article) => {
+      this.htmlPreview = this.md.render(article.content);
+    });
   }
 }
